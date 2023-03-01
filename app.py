@@ -13,8 +13,9 @@ def fibonacci(number) -> int:
         return number 
     return fibonacci(number - 1) + fibonacci(number - 2)
 
-
+#Escreve os 10 primeiros digitos no redis cache
 def redis_cache_write():
+    '''Write the ten first numbers in redis cache'''
     for i in range(1, 11):
         fib_number = fibonacci(i)
         redis_conn.set(f"fib_{i}", fib_number)
