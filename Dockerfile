@@ -1,4 +1,4 @@
-FROM python:slim
+FROM python:3.12-rc-slim
 
 WORKDIR /usr/src/app
 
@@ -11,6 +11,7 @@ RUN apt-get update && \
     apt-get install -y redis-tools && \
     rm -rf /var/lib/apt/lists/*
 
-RUN python app_test.py
 
-ENTRYPOINT [ "python", "./app.py" ]
+EXPOSE 6379 5432
+
+ENTRYPOINT [ "python", "app.py" ]
