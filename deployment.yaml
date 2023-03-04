@@ -23,9 +23,17 @@ services:
   fib_calc:
     image: ngsantos/fibcalculator
     restart: always
+    depends_on:
+      - fib_db
     networks:
       - frontend
       - backend
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_DB=fib: fib_data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mypasswd
+      REDIS_HOST: cache
 
 networks:
   frontend:
