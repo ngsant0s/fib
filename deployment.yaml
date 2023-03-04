@@ -9,16 +9,27 @@ services:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
+    networks:
+      - frontend
 
   cache:
     image: redis:7
     restart: always
     ports:
       - '6379:6379'
+    networks:
+      - backend
 
   fib_calc:
     image: ngsantos/fibcalculator
     restart: always
+    networks:
+      - frontend
+      - backend
+
+networks:
+  frontend:
+  backend:
 
 volumes:
   db:
