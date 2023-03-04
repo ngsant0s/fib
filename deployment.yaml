@@ -28,13 +28,7 @@ services:
     networks:
       - frontend
       - backend
-    environment:
-      POSTGRES_HOST: localhost
-      POSTGRES_DB=fib: fib_data
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mypasswd
-      REDIS_HOST: cache
-
+    
 networks:
   frontend:
     driver: bridge
