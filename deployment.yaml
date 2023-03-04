@@ -37,7 +37,9 @@ services:
 
 networks:
   frontend:
+    driver: bridge
   backend:
+    driver: bridge
 
 volumes:
   db:
