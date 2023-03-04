@@ -62,7 +62,7 @@ if __name__ == '__main__':
     postgres_host = 'localhost'
     postgres_port = 5432
     postgres_dbname = 'fib_data'
-    postgres_user = 'user'
+    postgres_user = 'postgres'
     postgres_password = 'mypasswd'
     postgres_conn = psycopg2.connect(host=postgres_host,
                                port=postgres_port,
