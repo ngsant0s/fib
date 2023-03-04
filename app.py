@@ -50,7 +50,7 @@ def postgres_write(number, fib_number, postgres_conn):
 if __name__ == '__main__':
 
     #Conectar ao cache Redis
-    redis_host = 'redis'
+    redis_host = 'cache'
     redis_port = 6379
     redis_db = 0
     redis_conn = redis.Redis(host=redis_host,
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 
     #Conectar ao postgresQL
-    postgres_host = 'postgres'
+    postgres_host = 'db'
     postgres_port = 5432
     postgres_dbname = 'fib_data'
     postgres_user = 'postgres'

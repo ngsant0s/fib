@@ -2,7 +2,7 @@ version: '3.8'
 services:
   fib_db:
     image: postgres:14.3
-    container_name: postgres
+    container_name: db
     restart: always
     environment:
       - POSTGRES_PASSWORD=mypasswd
@@ -15,7 +15,7 @@ services:
 
   cache:
     image: redis:7
-    container_name: redis
+    container_name: cache
     restart: always
     ports:
       - '6379:6379'
