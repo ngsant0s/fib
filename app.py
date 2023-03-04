@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 
     #Conectar ao postgresQL
-    pg_host = 'localhost'
+    pg_host = 'postgres'
     pg_port = 5432
     pg_dbname = 'fib_data'
     pg_user = 'postgres'
