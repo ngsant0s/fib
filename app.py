@@ -59,16 +59,16 @@ if __name__ == '__main__':
 
 
     #Conectar ao postgresQL
-    postgres_host = 'localhost'
-    postgres_port = 5432
-    postgres_dbname = 'fib_data'
-    postgres_user = 'postgres'
-    postgres_password = 'mypasswd'
-    postgres_conn = psycopg2.connect(host=postgres_host,
-                               port=postgres_port,
-                               dbname=postgres_dbname,
-                               user=postgres_user,
-                               password=postgres_password)
+    pg_host = 'localhost'
+    pg_port = 5432
+    pg_dbname = 'fib_data'
+    pg_user = 'postgres'
+    pg_password = 'mypasswd'
+    pg_conn = psycopg2.connect(host=pg_host,
+                               port=pg_port,
+                               dbname=pg_dbname,
+                               user=pg_user,
+                               password=pg_password)
 
 
     #Inicialização dos 10 primeiros digitos no redis cache
