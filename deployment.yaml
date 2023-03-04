@@ -2,6 +2,7 @@ version: '3.8'
 services:
   fib_db:
     image: postgres:14.3
+    container_name: postgres
     restart: always
     environment:
       - POSTGRES_PASSWORD=mypasswd
