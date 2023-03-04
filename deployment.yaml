@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  fib_db:
+  db:
     image: postgres:14.3
     container_name: db
     restart: always
@@ -22,7 +22,7 @@ services:
     networks:
       - backend
 
-  fib_calc:
+  calc:
     image: ngsantos/fibcalculator
     container_name: fib_calculator
     restart: always
