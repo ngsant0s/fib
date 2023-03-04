@@ -50,7 +50,7 @@ def postgres_write(number, fib_number, postgres_conn):
 if __name__ == '__main__':
 
     #Conectar ao cache Redis
-    redis_host = 'localhost'
+    redis_host = 'redis'
     redis_port = 6379
     redis_db = 0
     redis_conn = redis.Redis(host=redis_host,
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     postgres_dbname = 'fib_data'
     postgres_user = 'postgres'
     postgres_password = 'mypasswd'
-    postgres_conn = psycopostgres2.connect(host=postgres_host,
+    postgres_conn = psycopg2.connect(host=postgres_host,
                                port=postgres_port,
                                dbname=postgres_dbname,
                                user=postgres_user,
