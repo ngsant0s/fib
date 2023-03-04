@@ -59,9 +59,9 @@ if __name__ == '__main__':
 
 
     #Conectar ao postgresQL
-    postgres_host = 'db'
+    postgres_host = 'database'
     postgres_port = 5432
-    postgres_dbname = 'fib_data'
+    postgres_dbname = 'db'
     postgres_user = 'postgres'
     postgres_password = 'mypasswd'
     postgres_conn = psycopg2.connect(host=postgres_host,
@@ -95,4 +95,4 @@ if __name__ == '__main__':
 
     #Fechar a conexão com o Redis e o PostgresSQL
     redis_conn.close()
-    pg_conn.close()
+    postgres_conn.close()
