@@ -10,15 +10,15 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
 
-  fib_calc:
-    image: ngsantos/fibcalculator
-    restart: always
-
   cache:
     image: redis:7
     restart: always
     ports:
       - '6379:6379'
+
+  fib_calc:
+    image: ngsantos/fibcalculator
+    restart: always
 
 volumes:
   db:
