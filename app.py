@@ -31,10 +31,10 @@ def fibonacci(number, redis_conn, postgres_conn) -> int:
     return fib_number
 
 #Escreve os 10 primeiros digitos no redis cache
-def redis_cache_write(redis_conn):
+def redis_cache_write(redis_conn, postgres_conn):
     '''Write the ten first numbers in redis cache'''
     for i in range(1, 11):
-        fib_number = fibonacci(i)
+        fib_number = fibonacci(i, redis_conn, postgres_conn)
         redis_conn.set(f"fib_{i}", fib_number)
 
 #Escreve as buscas subsequentes repetidas no cache
@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
 
     #Inicialização dos 10 primeiros digitos no redis cache
-    redis_cache_write(redis_conn)
+    redis_cache_write(redis_conn, postgres_conn)
 
 
     #Seleção de um digito para calculo
