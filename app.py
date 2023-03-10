@@ -43,7 +43,7 @@ def redis_write(number, value):
 
 def postgres_write(number, fib_number, postgres_conn):
     cursor = postgres_conn.cursor()
-    cursor.execute("INSERT INTO fibonacci_numbers (number, value) VALUES (%s, %s) ON CONFLICT DO NOTHING", (number, fib_number))
+    cursor.execute("INSERT INTO fibonacci_numbers (digit, value) VALUES (%s, %s) ON CONFLICT DO NOTHING", (number, fib_number))
     postgres_conn.commit()
 
 
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     #Conectar ao postgresQL
     postgres_host = 'database'
     postgres_port = 5432
-    postgres_dbname = 'db'
+    postgres_dbname = 'database'
     postgres_user = 'postgres'
     postgres_password = 'mypasswd'
     postgres_conn = psycopg2.connect(host=postgres_host,

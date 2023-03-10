@@ -1,8 +1,8 @@
 version: '3.8'
 services:
   database:
-    image: postgres:14.3
-    container_name: db
+    image: ngsantos/mypostgres
+    container_name: database
     restart: always
     environment:
       - POSTGRES_PASSWORD=mypasswd
@@ -22,12 +22,18 @@ services:
     networks:
       - backend
 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
   calc:
     image: ngsantos/fibcalculator
     container_name: fib_calculator
     restart: always
     depends_on:
-      - fib_db
+      - database
     networks:
       - frontend
       - backend
