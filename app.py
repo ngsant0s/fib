@@ -26,7 +26,7 @@ def fibonacci(number, redis_conn, postgres_conn) -> int:
         return fib_number
 
 
-    postgres_write()
+    postgres_write(number, fib_number, postgres_conn)
     fib_number = fibonacci(number - 1, redis_conn, postgres_conn) + fibonacci(number - 2, redis_conn, postgres_conn)
     return fib_number
 
