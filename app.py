@@ -18,7 +18,7 @@ def fibonacci(number, redis_conn, postgres_conn) -> int:
 
     #Checagem se o numero esta no postgres
     cursor = postgres_conn.cursor()
-    cursor.execute("SELECT value FROM fibonacci_numbers WHERE number = %s", (number,))
+    cursor.execute("SELECT digit FROM fibonacci_numbers WHERE digit = %s", (number,))
     row = cursor.fetchone()
     if row is not None:
         fib_number = row[0]
@@ -43,7 +43,7 @@ def redis_write(number, value):
 
 def postgres_write(number, fib_number, postgres_conn):
     cursor = postgres_conn.cursor()
-    cursor.execute("INSERT INTO fibonacci_numbers (digit, value) VALUES (%s, %s) ON CONFLICT DO NOTHING", (number, fib_number))
+    cursor.execute("INSERT INTO fibonacci_numbers (digit, fib_value) VALUES (%s, %s) ON CONFLICT DO NOTHING", (number, fib_number))
     postgres_conn.commit()
 
 
