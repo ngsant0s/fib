@@ -43,6 +43,6 @@ DECLARE
     i INTEGER;
 BEGIN
     FOR i IN 1..10 LOOP
-        INSERT INTO fibonacci_numbers (fib_value) VALUES (fibonacci_function(i-1))
+        INSERT INTO fibonacci_numbers (fib_value) VALUES (fibonacci_function(i-1));
     END LOOP;
 END $$;
