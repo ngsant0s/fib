@@ -43,7 +43,7 @@ def redis_write(number, value):
 
 def postgres_write(number, fib_number, postgres_conn):
     cursor = postgres_conn.cursor()
-    cursor.execute("INSERT INTO fibonacci_numbers (digit, fib_value) VALUES (%s, %s) ON CONFLICT DO NOTHING", (number, fib_number))
+    cursor.execute(f"INSERT INTO fibonacci_numbers (digit, fib_value) VALUES ({number}, {fib_nunmber})")
     postgres_conn.commit()
 
 
