@@ -6,7 +6,6 @@ def fibonacci(number, redis_conn, postgres_conn) -> int:
     '''Fibonacci N digit calculation'''
     if number < 2:
         fib_number =  number
-        postgres_write(number, fib_number, postgres_conn)
         return number
 
 
@@ -75,10 +74,14 @@ if __name__ == '__main__':
     redis_cache_write(redis_conn, postgres_conn)
 
 
-    #Seleção de um digito para calculo
-    number = int(input("Qual digito da sequencia de Fibonacci deseja?\n"))
-
     while True:
+        #Seleção de um digito para calculo
+        try:
+            number = int(input("Qual digito da sequencia de Fibonacci deseja?\n"))
+        except EOFError:
+            print("Erro: entrada de dados interrompida, o programa sera encerrado")
+            break
+
         #Verificação se o digito informado é valido
         if number < 0:
             print("\nCaractere Invalido! Por favor informe um valor inteiro positivo.\n")
@@ -89,8 +92,9 @@ if __name__ == '__main__':
         #Escolha do usuario se ira calcular mais numeros
         answer = int(input("Deseja calcular mais algum numero?\n1 -> Sim / 2 -> Nao\n"))
         if answer == 1:
-            number = int(input("Qual digito da sequencia de Fibonacci deseja?\n"))
-        else: break
+            continue
+        else:
+            break
 
 
     #Fechar a conexão com o Redis e o PostgresSQL
