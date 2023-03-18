@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  database:
+    image: ngsantos/mypostgres
+    container_name: database
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=mypasswd
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+    networks:
+      - frontend
+
+  cache:
+    image: redis:7
+    container_name: cache
+    restart: always
+    ports:
+      - '6379:6379'
+    networks:
+      - backend
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  calc:
+    image: ngsantos/fibcalculator
+    container_name: fib_calculator
+    restart: always
+    depends_on:
+      - database
+    networks:
+      - frontend
+      - backend
+    
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+volumes:
+  db:
+    driver: local
