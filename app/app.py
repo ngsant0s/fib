@@ -73,15 +73,15 @@ if __name__ == '__main__':
     #Inicialização dos 10 primeiros digitos no redis cache
     redis_cache_write(redis_conn, postgres_conn)
 
-
-    while True:
+    KEEP_RUNNING = True
+    while KEEP_RUNNING:
         #Seleção de um digito para calculo
         try:
             number = int(input("Qual digito da sequencia de Fibonacci deseja?\n"))
+            print(f"Digito informado: {number}")
         except EOFError:
             print("Erro: entrada de dados interrompida, o programa sera encerrado")
             break
-
         #Verificação se o digito informado é valido
         if number < 0:
             print("\nCaractere Invalido! Por favor informe um valor inteiro positivo.\n")
@@ -94,7 +94,7 @@ if __name__ == '__main__':
         if answer == 1:
             continue
         else:
-            break
+            KEEP_RUNNING = False
 
 
     #Fechar a conexão com o Redis e o PostgresSQL
