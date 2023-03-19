@@ -77,7 +77,7 @@ if __name__ == '__main__':
     while KEEP_RUNNING:
         #Seleção de um digito para calculo
         try:
-            number = int(input("Qual digito da sequencia de Fibonacci deseja?\n"))
+            number = int(input("Qual digito da sequencia de Fibonacci deseja?\n").strip())
             print(f"Digito informado: {number}")
         except EOFError:
             print("Erro: entrada de dados interrompida, o programa sera encerrado")
