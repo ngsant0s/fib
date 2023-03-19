@@ -86,7 +86,7 @@ if __name__ == '__main__':
         if number < 0:
             print("\nCaractere Invalido! Por favor informe um valor inteiro positivo.\n")
         else:        
-            print(f"O digito {number} da sequencia e:", fibonacci(number))
+            print(f"O digito {number} da sequencia e:", fibonacci(number, redis_conn, postgres_conn))
 
 
         #Escolha do usuario se ira calcular mais numeros
