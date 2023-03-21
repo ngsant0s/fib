@@ -21,12 +21,13 @@ def fibonacci(number, redis_conn, postgres_conn) -> int:
     row = cursor.fetchone()
     if row is not None:
         fib_number = row[0]
-        redis_write(number, fib_number)
+        redis_write(number, fib_number, redis_conn)
         return fib_number
 
 
     fib_number = fibonacci(number - 1, redis_conn, postgres_conn) + fibonacci(number - 2, redis_conn, postgres_conn)
     postgres_write(number, fib_number, postgres_conn)
+    redis_write(number, fib_number, redis_conn)
     return fib_number
 
 #Escreve os 10 primeiros digitos no redis cache
@@ -37,7 +38,7 @@ def redis_cache_write(redis_conn, postgres_conn):
         redis_conn.set(f"fib_{i}", fib_number)
 
 #Escreve as buscas subsequentes repetidas no cache
-def redis_write(number, value):
+def redis_write(number, value, redis_conn):
     redis_conn.set(number, value)
 
 def postgres_write(number, fib_number, postgres_conn):
@@ -74,10 +75,13 @@ if __name__ == '__main__':
     redis_cache_write(redis_conn, postgres_conn)
 
     KEEP_RUNNING = True
+    print("LOOP BEGIN")
     while KEEP_RUNNING:
         #Seleção de um digito para calculo
         try:
+            print("----------")
             number = int(input("Qual digito da sequencia de Fibonacci deseja?\n").strip())
+            print("----------")
             print(f"Digito informado: {number}")
         except EOFError:
             print("Erro: entrada de dados interrompida, o programa sera encerrado")
