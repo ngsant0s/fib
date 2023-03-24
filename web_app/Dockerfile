@@ -1,9 +1,13 @@
 FROM python:3.12.0a5
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . .
+COPY . /app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT [ "python", "web_app.py" ]
+EXPOSE 5000
+
+ENV FLASK_APP=app.py
+
+CMD [ "flask", "run", "--host=0.0.0.0" ]

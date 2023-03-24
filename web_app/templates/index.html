@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fibonacci Calculator</title>
+  </head>
+  <body>
+    <h1>Calculate Fibonacci Sequence</h1>
+    <form action="/calculate" method="POST">
+      <label for="number">Enter a number:</label>
+      <input type="text" name="number" id="number" required>
+      <input type="submit" value="Calculate">
+    </form>
+    {% if result %}
+    <h2>Result:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Fib</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in range(result|length) %}
+          {% if i == result|length-1 %}
+            <tr>
+              <td>{{ number }}</td>
+              <td>{{ result[i] }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  </body>
+</html>
