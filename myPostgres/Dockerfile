@@ -1,7 +1,7 @@
-FROM postgres:14.3
+FROM postgres:13.4
 
 ENV POSTGRES_USER postgres
 ENV POSTGRES_PASSWORD mypasswd
 ENV POSTGRES_DB database
 
-ADD createTables.sql /docker-entrypoint-initdb.d/
+COPY init.sql /docker-entrypoint-initdb.d/

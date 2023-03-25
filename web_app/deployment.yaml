@@ -1,17 +1,18 @@
 version: '3.8'
 services:
-  #database:
-  #  image: ngsantos/mypostgres
-  #  container_name: database
-  #  restart: always
-  # environment:
-  #    - POSTGRES_PASSWORD=mypasswd
-  #  ports:
-  #    - '5432:5432'
-  #  volumes: 
-  #    - db:/var/lib/postgresql/data
-  #  networks:
-  #    - frontend
+  database:
+    image: ngsantos/mypostgres
+    container_name: database
+    restart: always
+    environment:
+      - POSTGERS_USER=postgres
+      - POSTGRES_PASSWORD=mypasswd
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+    networks:
+      - frontend
 
   cache:
     image: redis:7
@@ -33,6 +34,7 @@ services:
       - REDIS_PORT=6379
     depends_on:
       - cache
+      - database
     networks:
       - frontend
       - backend
@@ -48,6 +50,6 @@ networks:
   backend:
     driver: bridge
 
-#volumes:
-#  db:
-#    driver: local
+volumes:
+  db:
+    driver: local
