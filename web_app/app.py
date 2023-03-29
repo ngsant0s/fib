@@ -65,15 +65,15 @@ def calculate():
         result = redis_cache.get(number)
         if result:
             result = json.loads(result)
+            #data = result
         else:
             result = get_sequence_postgres(number)
             if not result:
-
                 result = fibonacci(int(number))
                 postgres_write(int(number), result)
-                data = {"number": number, "fibonacci": result}
+            data = {"number": number, "fibonacci": result}
 
-        redis_cache.set(number, json.dumps(data))
+            redis_cache.set(number, json.dumps(data))
 
         return render_template('index.html', result=result, number=number)
     return render_template('index.html')

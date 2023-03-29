@@ -23,8 +23,8 @@
         {% for i in range(result|length) %}
           {% if i == result|length-1 %}
             <tr>
-              <td>{{ number }}</td>
-              <td>{{ result[i] }}</td>
+              <td>{{ result["number"] }}</td>
+              <td>{{ result["fiboacci"] }}</td>
             </tr>
           {% endif %}
         {% endfor %}
