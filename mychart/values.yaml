@@ -1,0 +1,24 @@
+postgres:
+  username: "postgres"
+  password: "mypasswd"
+  database: "fib_data"
+  host: "database"
+  port: "5432"
+
+redis:
+  host: "cache"
+  port: "6379"
+
+fibonacci:
+  replicas: 1
+  image: "ngsantos/fibpyweb:latest"
+  resources:
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+    requests:
+      memory: "128Mi"
+      cpu: "500m"
+  service:
+    port: 5000
+    type: ClusterIP
