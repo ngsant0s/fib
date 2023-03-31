@@ -4,15 +4,19 @@ services:
     image: ngsantos/mypostgres
     container_name: database
     restart: always
-    environment:
-      - POSTGERS_USER=postgres
-      - POSTGRES_PASSWORD=mypasswd
     ports:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
+
     networks:
       - frontend
+    healthcheck:
+      test: ["CMD-SHELL", "pg-isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
 
   cache:
     image: redis:7
@@ -22,13 +26,18 @@ services:
       - '6379:6379'
     networks:
       - backend
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   fibonacci:
     image: ngsantos/fibpyweb
     container_name: fib_web
     restart: always
     ports:
-      - "5000:5000"
+      - '5000:5000'
     environment:
       - REDIS_HOST=cache
       - REDIS_PORT=6379
@@ -43,6 +52,28 @@ services:
         soft: 65536
         hard: 65536
       nproc: 65536
+    healthcheck:
+      test: ["CMD", "curl", "-F", "http://localhost:5000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  nginx:
+    image: ngsantos/mynginx
+    container_name: nginx
+    restart: always
+    ports:
+      - '80:80'
+    depends_on:
+      - fibonacci
+    networks:
+      - backend
+      - frontend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     
 networks:
   frontend:
