@@ -1,1 +1,169 @@
+#database pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  labels:
+    app: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: ngsantos/mypostgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: postgres 
+            - name: POSTGRES_PASSWORD
+              value: mypasswd
+          volumeMounts:
+            - name: db 
+              mountPath: /var/lib/postgresql/data
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres"]
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 1
+            sucessThreshold: 1
+            failureThreshold: 3
+      volumes: 
+        - name: db 
+          persistentVolumeClaim:
+            claimName: db-claim
+          
+---
+#database service
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+spec:
+  selector:
+    app: database
+  ports:
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP
 
+---
+#cache pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cache
+  template:
+    metadata:
+      labels:
+        app: cache
+    spec:
+      containers:
+      - name: cache
+        image: redis:7
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        readinessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 1
+            sucessThreshold: 1
+            failureThreshold: 3
+        livenessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 1
+            sucessThreshold: 1
+            failureThreshold: 3
+
+---
+#cache service
+apiVersion: v1
+kind: Service
+metadata:
+  name: cache
+spec:
+  selector:
+    app: cache
+  ports:
+  - port: 6379
+    targetPort: 6379
+  type: ClusterIP
+
+---
+#app pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibonacci
+  labels:
+    app: fibonacci
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fibonacci
+  template:
+    metadata:
+      labels:
+        app: fibonacci
+    spec:
+      containers:
+      - name: fibonacci
+        image: ngsantos/fibpyweb
+        ports:
+        - containerPort: 5000
+        env:
+          - name: REDIS_HOST
+            value: cache
+          - name: REDIS_PORT
+            value: "6379"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+            nofile: "65536"
+            nproc: "65536"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          sucessThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          sucessThreshold: 1
+          failureThreshold: 3
