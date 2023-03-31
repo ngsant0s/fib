@@ -53,7 +53,7 @@ services:
         hard: 65536
       nproc: 65536
     healthcheck:
-      test: ["CMD", "curl", "-F", "http://localhost:5000"]
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
       interval: 30s
       timeout: 10s
       retries: 5
